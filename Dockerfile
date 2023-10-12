@@ -1,31 +1,31 @@
-FROM nginx:mainline-alpine-slim
-MAINTAINER ifeng <https://t.me/HiaiFeng>
-EXPOSE 80
-USER root
+从nginx:主线-阿尔卑斯-苗条
+维护者凤凰< https://t.me/HiaiFeng >
+揭露 80
+用户根
 
-RUN apk update && apk add --no-cache supervisor wget unzip curl
+奔跑apk更新&& apk无缓存管理程序wget解压缩卷曲
 
-# 定义 UUID 及 伪装路径,请自行修改.(注意:伪装路径以 / 符号开始,为避免不必要的麻烦,请不要使用特殊符号.)
-ENV UUID de04add9-5c68-8bab-950c-08cd5320df18
-ENV VMESS_WSPATH /vmess
-ENV VLESS_WSPATH /vless
+# 定义UUID及 伪装路径,请自行修改。(注意：伪装路径以 / 符号开始,为避免不必要的麻烦,请不要使用特殊符号。)
+包封/包围（动词包围的简写)UUID 668bdb89-a77f-44ff-b236-5d108d65a749
+包封/包围（动词包围的简写)VMESS_WSPATH /vmess
+包封/包围（动词包围的简写)VLESS_WSPATH /vless
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY nginx.conf /etc/nginx/nginx.conf
+复制超级坏蛋。conf/etc/supervisor/confd/超级主管。会议
+复制nginx。conf/etc/nginx/nginx。会议
 
-RUN mkdir /etc/v2ray /usr/local/v2ray
-COPY config.json /etc/v2ray/
-COPY entrypoint.sh /usr/local/v2ray/
+奔跑mkdir/etc/v2射线/usr/local/v2射线
+复制config.json /etc/v2ray/
+复制entrypoint.sh /usr/local/v2ray/
 
-# 感谢 fscarmen 大佬提供 Dockerfile 层优化方案
-RUN wget -q -O /tmp/v2ray-linux-64.zip https://github.com/v2fly/v2ray-core/releases/download/v4.45.0/v2ray-linux-64.zip && \
-    unzip -d /usr/local/v2ray /tmp/v2ray-linux-64.zip v2ray  && \
-    wget -q -O /usr/local/v2ray/geosite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat && \
-    wget -q -O /usr/local/v2ray/geoip.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat && \
-    chmod a+x /usr/local/v2ray/entrypoint.sh && \
-    apk del wget unzip  && \
-    rm -rf /tmp/v2ray-linux-64.zip && \
-    rm -rf /var/cache/apk/* && \
-    rm -rf /tmp/*
+# 感谢fscarmen大佬提供Dockerfile文件文件层优化方案
+奔跑wget-q-O/tmp/v2 ray-Linux-64。zip https://github。com/v2 fly/v2 ray-core/releases/download/v4。45 .0/v2 ray-Linux-64。zip & & \
+unzip-d/usr/local/v2 ray/tmp/v2 ray-Linux-64。压缩v2射线& & \
+wget-q-O/usr/local/v2 ray/geosite。dat https://github。com/忠诚的士兵/v2射线-规则-dat/发布/最新/下载/geosite。日期& \
+wget-q-O/usr/local/v2 ray/GeoIP。dat https://github。com/忠诚的士兵/v2射线-规则-dat/发布/最新/下载/GeoIP。dat & & \
+chmod a+x/usr/local/v2射线/入口点。嘘& & \
+apk del wget unzip && \
+RM-RF/tmp/v2 ray-Linux-64。zip & & \
+rm -rf /var/cache/apk/* && \
+rm -rf /tmp/*
     
-ENTRYPOINT [ "/usr/local/v2ray/entrypoint.sh" ]
+入口点["/usr/local/v2 ray/entry point . sh "]
